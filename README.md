@@ -24,9 +24,9 @@ Estas representações alcançam precisões altíssimas de detecção e classifi
 
 ### 1. Geração de Representações (Feature Extractors)
 Implementamos os scripts responsáveis pela conversão dos pacotes para as matrizes matemáticas de Extração e Agrupamento (Grouping).
-* `embeddings_flow.py` : Implementa a extração no nível **Unidirecional (Flow / 5-tuple)**.
-* `embeddings_service.py`: Implementa a extração no nível de **Serviço (Service / Destination Port)**.
-* `embeddings_biflow.py`: Implementa a extração no nível **Bidirecional (Biflow / A ↔ B)** através da normalização da chave de rede.
+* `embeddings3_5tuple.py` : Implementa a extração no nível **Unidirecional (Flow / 5-tuple)**.
+* `embeddings_service3.py`: Implementa a extração no nível de **Serviço (Service / Destination Port)**.
+* `embeddings_biflow3.py`: Implementa a extração no nível **Bidirecional (Biflow / A ↔ B)** através da normalização da chave de rede.
 
 **As propriedades matemáticas capturadas incluem:**
 * **Características de Distribuição:** Estatísticas básicas de Packet Length, Timestamp Relativo e IAT (Inter-Arrival Time).
@@ -35,7 +35,7 @@ Implementamos os scripts responsáveis pela conversão dos pacotes para as matri
 * **Dinâmicas Estruturais e Temporais:** PCA e Coeficientes de transição linear extraídos via *Vector Autoregression* (VAR).
 
 ### 2. Classificação / Avaliação
-* `classification.py`: Contém a lógica base de validação usando um **Random Forest Classifier** conforme a experimentação descrita no artigo. Mede Acurácia, F1-Score, AUC, Precisão e exibe detalhes de importância preditiva em Cenários Multiclasse.
+* `randomforest.py`: Contém a lógica base de validação usando um **Random Forest Classifier** conforme a experimentação descrita no artigo. Mede Acurácia, F1-Score, AUC, Precisão e exibe detalhes de importância preditiva em Cenários Multiclasse.
 
 ---
 
@@ -59,17 +59,17 @@ O método baseia-se num pipeline que pega um dataset de pacotes formatado em `.p
 
 **Opção A - Packets per Flow (Unidirecional):**
 ```bash
-python embeddings_flow.py
+python embeddings3_5tuple.py
 ```
 
 **Opção B - Packets per Service (Apenas Destino):**
 ```bash
-python embeddings_service.py
+python embeddings_service3.py
 ```
 
 **Opção C - Packets per Biflow (Bidirecional):**
 ```bash
-python embeddings_biflow.py
+python embeddings_biflow3.py
 ```
 
 O script salvará o resultado (ex: `output_edgeiiot_embeddings_service3.parquet`) em um diretório configurado no output.
@@ -77,10 +77,10 @@ O script salvará o resultado (ex: `output_edgeiiot_embeddings_service3.parquet`
 ### Passo 2: Classificação e Inferência
 De posse do embedding gerado, o teste base avaliará as representações:
 
-1. Edite o script `classification.py` modificando o `INPUT_FILE` para apontar para o `.parquet` que você gerou no Passo 1.
+1. Edite o script `randomforest.py` modificando o `INPUT_FILE` para apontar para o `.parquet` que você gerou no Passo 1.
 2. Execute o modelo:
 ```bash
-python classification.py
+python randomforest.py
 ```
 3. A saída mostrará a performance (Accuracy, Precision, Recall, F1 e AUC-ROC) e listará as 40 dimensões numéricas padronizadas (variáveis de saída) usadas para a tomada de decisão, demonstrando que o algoritmo não "decorou" os IPs originais para predizer o resultado (shortcut learning problem).
 

@@ -89,6 +89,6 @@ python classification.py
 ## Resultados em Destaque no Artigo
 O método avaliado em datasets heterogêneos como *AWID3, 5G-NIDD, UNSW-NB15 e Edge-IIoTset* mostra:
 * Classificações (Accuracy e F1-Scores) superiores a **99%** usando o Random Forest, removendo os falsos positivos causados pelas regras temporais ou de IPs do Dataset Original.
-* Processamento e latência de processamento incrivelmente eficientes com tempo médio variando de $0.0024ms/pkt$ (Service) a $pprox0.0149ms/pkt$ (Biflow), atendendo aos requisitos estritos de IoT/5G para monitoramento em tempo real em $O(N)$ de complexidade de escalonamento.
+* Processamento e latência de processamento incrivelmente eficientes com tempo médio variando de $0.0024ms/pkt$ (Service) a $0.0149ms/pkt$ (Biflow), atendendo aos requisitos estritos de IoT/5G para monitoramento em tempo real em $O(N)$ de complexidade de escalonamento.
 
 ---
